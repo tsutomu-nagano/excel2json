@@ -30,21 +30,21 @@ codelist:
   listitem:
     statcode:
       type: cell
-      address: B1
+      address: B2
     
     key:
       type: cell
-      address: B2
+      address: B3
     
     items:
       type: table
-      address: A5
+      address: A7
       colmap:
-        - ja: 符号
+        - ja: F1
           var: code
 
-        - ja: 符号内容
+        - ja: F2
           var: content
 
-        - ja: 備考
+        - ja: F3
           var: note
