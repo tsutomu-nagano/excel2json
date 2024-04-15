@@ -63,6 +63,7 @@ def excel_to_json(
 
     with tempfile.NamedTemporaryFile(delete=True, suffix = Path(template_file.filename).suffix) as t1,\
          tempfile.NamedTemporaryFile(delete=True, suffix = Path(conversion_config_file.filename).suffix) as t2:
+
         shutil.copyfileobj(template_file.file, t1)
         shutil.copyfileobj(conversion_config_file.file, t2)
 
@@ -72,5 +73,4 @@ def excel_to_json(
         item = excle2json_core.xls_with_yaml2json(src = t1.name, config = t2.name)
         json_compatible_item_data = jsonable_encoder(item)
         return JSONResponse(content=json_compatible_item_data)
-
 

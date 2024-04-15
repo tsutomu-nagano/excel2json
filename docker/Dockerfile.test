@@ -1,0 +1,4 @@
+FROM e2j
+
+RUN pip install --no-cache-dir --upgrade pytest
+
