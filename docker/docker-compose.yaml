@@ -2,7 +2,7 @@ version: "3.8"
 services:
   buildcontainer:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     image: e2j
     container_name: e2j-build
@@ -15,7 +15,7 @@ services:
 
   devcontainer:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     image: e2j
     container_name: e2j-dev
@@ -31,7 +31,7 @@ services:
 
   testcontainer:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile.test
     image: e2j-test
     container_name: e2j-test
