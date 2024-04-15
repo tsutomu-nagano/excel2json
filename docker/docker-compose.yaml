@@ -12,6 +12,8 @@ services:
       
     volumes:
       - ..:/code
+    
+    command: "/bin/bash"
 
   devcontainer:
     build:
@@ -28,6 +30,7 @@ services:
       
     volumes:
       - ../excel2json:/code/app
+      - ../sample:/code/sample
 
   testcontainer:
     build:

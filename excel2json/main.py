@@ -20,12 +20,13 @@ import yaml
 import tempfile
 import shutil
 import requests
+import zipfile
 
 from openpyxl import load_workbook
 
 from pandas import json_normalize
 
-from excel2json import excel2json
+from . import excel2json
 
 tags_metadata = [
     {
@@ -55,7 +56,10 @@ app = FastAPI(
 
 
 
-@app.post("/excel2json", tags = ["convert"])
+@app.post(
+        "/excel2json",
+        summary="変換定義（YAML）ファイルを基にExcelファイルをJSONに変換します",
+        tags = ["convert"])
 def excel_to_json(
     template_file: UploadFile = File(...),
     conversion_config_file: UploadFile = File(...)
@@ -73,4 +77,19 @@ def excel_to_json(
         item = excel2json.xls_with_yaml2json(src = t1.name, config = t2.name)
         json_compatible_item_data = jsonable_encoder(item)
         return JSONResponse(content=json_compatible_item_data)
+
+@app.get(
+        "/sample",
+        summary="処理に必要な変換定義（YAML）ファイルと簡単なExcelファイルを取得します",
+        tags = ["convert"])
+def get_sample():
+
+    with tempfile.NamedTemporaryFile(delete=False, dir =".", suffix = ".zip") as t1:
+
+        with zipfile.ZipFile(t1.name, 'w') as myzip:
+            myzip.write("sample/convert.yaml")
+            myzip.write('sample/test.xlsx')
+
+        return FileResponse(path=t1.name, filename="sample.zip")
+
 
