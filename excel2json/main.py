@@ -74,7 +74,7 @@ def excel_to_json(
         # これ実行しないとなぜか戻り値がNoneになる・・・
         y = yaml.safe_load(t2)
 
-        item = excel2json.xls_with_yaml2json(src = t1.name, config = t2.name)
+        item = excel2json.Excel2JSON.xls_with_yaml2json(src = t1.name, config = t2.name)
         json_compatible_item_data = jsonable_encoder(item)
         return JSONResponse(content=json_compatible_item_data)
 
