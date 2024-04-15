@@ -18,10 +18,12 @@ items:
   sheet: Sheet1
   address: C5
   colmap:
-    - ja: A
+    - ja: 
+        text: A
       var: col_a
 
-    - ja: B
+    - ja:
+        text: B
       var: col_b
 
 codelist:
@@ -40,13 +42,16 @@ codelist:
       type: table
       address: A7
       colmap:
-        - ja: F1
+        - ja: 
+            text: F1
           var: code
           format:
             wide_to_narrow: True
 
-        - ja: F2
+        - ja:
+            text: F2
           var: content
 
-        - ja: F3
+        - ja:
+            text: F3
           var: note
