@@ -19,7 +19,7 @@ ExcelファイルをJSONに変換する
 ### PaaS
 
 - renderの無料枠でdeployしています
-- 🌐 https://exce2json.onrender.com/docs
+- 🌐 https://excel2json.onrender.com/docs/
 
 ## Demo
 
