@@ -10,8 +10,16 @@ ExcelファイルをJSONに変換する
 
 ## Getting Started
 
-1. docker compose up -d
-2. http://localhost:1234/docs/
+### local
+
+1. cd docker
+2. docker compose up -d
+3. http://localhost:1234/docs/
+
+### PaaS
+
+- renderの無料枠でdeployしています
+- 🌐 https://exce2json.onrender.com/docs
 
 ## Demo
 
