@@ -7,7 +7,10 @@ import unicodedata
 import sys
 import copy
 
+import exceptions
+
 class Excel2JSON():
+
 
     @staticmethod
     def __getcell(wb, info):
@@ -17,6 +20,8 @@ class Excel2JSON():
         address = info["address"]
 
         return(str(wb[sheet][address].value))
+
+
 
     @staticmethod
     def __rename_header(df, colmaps):
@@ -39,6 +44,18 @@ class Excel2JSON():
 
         return(df)
 
+
+
+    @staticmethod
+    def __get_missing_require_fields(df, colmaps):
+
+        names_exists = {colmap["var"]:False for colmap in colmaps if "require" in colmap}
+
+        [names_exists.update((column, True)) for column in df.columns.values if column in names_exists]
+
+        return([name for name, exist in names_exists.items() if not exist])
+
+
     @staticmethod
     def __gettable(src, info):
 
@@ -58,12 +75,19 @@ class Excel2JSON():
                         ).fillna("")
         
 
-        # ヘッダーの変換
+        # ヘッダーの処理
         if "colmap" in info:
             colmaps = info["colmap"]
 
+            # 名前変換
             df = Excel2JSON.__rename_header(df, colmaps)
 
+            # 必須項目のチェック
+            missing_require_fields = Excel2JSON.__get_missing_require_fields(df, colmaps)
+            if len(missing_require_fields) >= 1:
+                raise exceptions.MissingRequiredFieldError(missing_require_fields)
+
+            # 値のフォーマット
             formats = {colmap["var"]:colmap["format"] for colmap in colmaps if "format" in colmap}
 
             for col_var, format in formats.items():

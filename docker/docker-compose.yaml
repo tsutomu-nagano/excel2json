@@ -25,6 +25,9 @@ services:
     stdin_open: true
     tty: true
 
+    environment:
+      - PYTHONPATH=/code/app
+
     ports:
       - "1234:80"
       

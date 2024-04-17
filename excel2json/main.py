@@ -26,7 +26,8 @@ from openpyxl import load_workbook
 
 from pandas import json_normalize
 
-from . import excel2json
+import excel2json
+import exceptions
 
 tags_metadata = [
     {
