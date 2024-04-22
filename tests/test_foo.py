@@ -52,7 +52,7 @@ def test_table変換する際の列名を正規表現で一致させて置換す
 
     assert ret == expected
 
-def test_必須の項目が存在しない場合():
+def test_必須の項目が存在しない場合_type_list():
 
     src = "tests/resource/005/test.xlsx"
     config = "tests/resource/005/convert.yaml"
@@ -61,6 +61,17 @@ def test_必須の項目が存在しない場合():
         ret = Excel2JSON.xls_with_yaml2json(src, config)
 
         assert str(e.value) == "Required field 'code' is missing."
+
+def test_必須の項目が存在しない場合_type_cell():
+
+    src = "tests/resource/006/test.xlsx"
+    config = "tests/resource/006/convert.yaml"
+
+    with pytest.raises(MissingRequiredFieldError) as e:
+        ret = Excel2JSON.xls_with_yaml2json(src, config)
+
+        assert str(e.value) == "Required cell 'hoge' is missing."
+
 
 
 

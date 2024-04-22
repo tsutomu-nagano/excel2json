@@ -6,13 +6,7 @@ header:
     type: cell
     sheet: Sheet1
     address: B1
-
-  fuga:
-    type: cell
-    sheet: Sheet1
-    address: B1
-    
-
+    require:
 
 items:
   type: table
@@ -44,8 +38,9 @@ codelist:
       address: A7
       colmap:
         - ja: 
-            text: F1
+            re: (F|f)1
           var: code
+          require:
           format:
             wide_to_narrow: True
 

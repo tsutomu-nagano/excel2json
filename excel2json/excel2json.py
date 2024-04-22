@@ -13,11 +13,16 @@ class Excel2JSON():
 
 
     @staticmethod
-    def __getcell(wb, info):
+    def __getcell(name, wb, info):
 
 
         sheet = info["sheet"]
         address = info["address"]
+        value = str(wb[sheet][address].value).strip()
+        if "require" in info:
+            if value == "":
+                raise exceptions.MissingRequiredFieldError(name)
+
 
         return(str(wb[sheet][address].value))
 
@@ -116,7 +121,7 @@ class Excel2JSON():
 
 
     @staticmethod
-    def __xls_with_yaml2json_core(y, wb, src, sheet = ""):
+    def __xls_with_yaml2json_core(y, wb, src, sheet = "", name = ""):
         if isinstance(y, dict):
             if "type" in y:
                 conv_type = y["type"]
@@ -125,7 +130,7 @@ class Excel2JSON():
                     y["sheet"] = sheet
 
                 if conv_type == "cell":
-                    y = Excel2JSON.__getcell(wb, y)
+                    y = Excel2JSON.__getcell(name, wb, y)
                 
                 if conv_type == "table":
                     y = Excel2JSON.__gettable(src, y)
@@ -135,7 +140,7 @@ class Excel2JSON():
 
             else:
                 for k in y:
-                    y[k] = Excel2JSON.__xls_with_yaml2json_core(y[k], wb, src, sheet)
+                    y[k] = Excel2JSON.__xls_with_yaml2json_core(y[k], wb, src, sheet, name = k)
 
         return(y)
 
