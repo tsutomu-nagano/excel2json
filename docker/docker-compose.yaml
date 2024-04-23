@@ -3,7 +3,7 @@ services:
   buildcontainer:
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     image: e2j
     container_name: e2j-build
 
@@ -16,17 +16,14 @@ services:
     command: "/bin/bash"
 
   devcontainer:
-    build:
-      context: ..
-      dockerfile: Dockerfile
     image: e2j
     container_name: e2j-dev
 
     stdin_open: true
     tty: true
 
-    environment:
-      - PYTHONPATH=/code/app
+    # environment:
+    #   - PYTHONPATH=/code/app
 
     ports:
       - "1234:80"
@@ -38,15 +35,15 @@ services:
   testcontainer:
     build:
       context: ..
-      dockerfile: Dockerfile.test
+      dockerfile: docker/Dockerfile.test
     image: e2j-test
     container_name: e2j-test
 
     stdin_open: true
     tty: true
 
-    environment:
-      - PYTHONPATH=/code/app
+    # environment:
+    #   - PYTHONPATH=/code/app
 
     volumes:
       - ../excel2json:/code/app
