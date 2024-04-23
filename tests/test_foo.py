@@ -1,6 +1,6 @@
 
 from excel2json import Excel2JSON
-from exceptions import MissingRequiredFieldError
+from exceptions import MissingRequiredError, InvalidNumericValueError
 
 import os
 import json
@@ -57,21 +57,30 @@ def test_必須の項目が存在しない場合_type_list():
     src = "tests/resource/005/test.xlsx"
     config = "tests/resource/005/convert.yaml"
 
-    with pytest.raises(MissingRequiredFieldError) as e:
+    with pytest.raises(MissingRequiredError) as e:
         ret = Excel2JSON.xls_with_yaml2json(src, config)
 
-        assert str(e.value) == "Required field 'code' is missing."
+    assert str(e.value) == "Required 'code' is missing."
 
 def test_必須の項目が存在しない場合_type_cell():
 
     src = "tests/resource/006/test.xlsx"
     config = "tests/resource/006/convert.yaml"
 
-    with pytest.raises(MissingRequiredFieldError) as e:
+    with pytest.raises(MissingRequiredError) as e:
         ret = Excel2JSON.xls_with_yaml2json(src, config)
 
-        assert str(e.value) == "Required cell 'hoge' is missing."
+    assert str(e.value) == "Required 'hoge' is missing."
 
+def test_数値のみ許容する場合_type_cell():
+
+    src = "tests/resource/007/test.xlsx"
+    config = "tests/resource/007/convert.yaml"
+
+    with pytest.raises(InvalidNumericValueError) as e:
+        ret = Excel2JSON.xls_with_yaml2json(src, config)
+
+    assert str(e.value) == "'hoge' is Invalid Numeric Value."
 
 
 

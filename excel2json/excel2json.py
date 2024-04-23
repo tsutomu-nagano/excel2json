@@ -15,13 +15,20 @@ class Excel2JSON():
     @staticmethod
     def __getcell(name, wb, info):
 
+        __num_ptn = re.compile("^[0-9]+")
 
         sheet = info["sheet"]
         address = info["address"]
         value = str(wb[sheet][address].value).strip()
+        value = "" if value == "None" else value
+
         if "require" in info:
             if value == "":
-                raise exceptions.MissingRequiredFieldError(name)
+                raise exceptions.MissingRequiredError(name)
+
+        if "numeric" in info:
+            if __num_ptn.match(value) is None:
+                raise exceptions.InvalidNumericValueError(name)
 
 
         return(str(wb[sheet][address].value))
@@ -90,10 +97,10 @@ class Excel2JSON():
             # 必須項目のチェック
             missing_require_fields = Excel2JSON.__get_missing_require_fields(df, colmaps)
             if len(missing_require_fields) >= 1:
-                raise exceptions.MissingRequiredFieldError(missing_require_fields)
+                raise exceptions.MissingRequiredError(",".join(missing_require_fields))
 
             # 値のフォーマット
-            formats = {colmap["var"]:colmap["format"] for colmap in colmaps if "format" in colmap}
+            formats = {colmap["var"]:colmap["format"] for colmap in colmaps if "format" in colmap and colmap["var"] in df.columns}
 
             for col_var, format in formats.items():
                 if "wide_to_narrow" in format:

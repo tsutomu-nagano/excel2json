@@ -7,6 +7,7 @@ header:
     sheet: Sheet1
     address: B1
     require:
+    numeric:
 
 items:
   type: table
@@ -40,6 +41,7 @@ codelist:
         - ja: 
             re: (F|f)1
           var: code
+          require:
           format:
             wide_to_narrow: True
 
